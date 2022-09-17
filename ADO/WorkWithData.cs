@@ -59,7 +59,10 @@ namespace ADO
             };
             oleDbConnection = new OleDbConnection(oleDbCon.ConnectionString);
         }
-
+        /// <summary>
+        /// Подключить/отключить источник данных
+        /// </summary>
+        /// <param name="select">Источник</param>
         public void ConnectionStateChanger(string select)
         {
             switch (select)
