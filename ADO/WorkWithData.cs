@@ -4,8 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data;
+using System.Data.OleDb;
 using System.Data.SqlClient;
 using Microsoft.Data.SqlClient;
+using System.Diagnostics;
+using System.Windows.Markup;
+using System.Windows;
 
 namespace ADO
 {
@@ -16,13 +20,20 @@ namespace ADO
     {
         #region Поля
         /// <summary>
+        /// Путь до базы Access
+        /// </summary>
+        private string oleDbDataSourcePath = Environment.CurrentDirectory + @"\Data\MSAccessLocalDB.accdb";
+        #endregion
+
+        #region Свойства
+        /// <summary>
         /// Подключение к SQL
         /// </summary>
         public SqlConnection sqlConnection { get; set; }
         /// <summary>
-        /// Строка подключения к Acess
+        /// Подключение к Acess
         /// </summary>
-        //static string accessConnectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\Programming\DzSkillbox\ADO\ADO\Data\MSAccessLocalDB.accdb;Persist Security Info=True";
+        public OleDbConnection oleDbConnection { get; set; }
         #endregion
 
         public WorkWithData()
@@ -37,14 +48,37 @@ namespace ADO
                 Pooling = false
             };
             sqlConnection = new SqlConnection(sqlCon.ConnectionString);
+
+            OleDbConnectionStringBuilder oleDbCon = new OleDbConnectionStringBuilder()
+            {
+                DataSource = oleDbDataSourcePath,
+                Provider = @"Microsoft.ACE.OLEDB.12.0",
+                PersistSecurityInfo = true,
+                ["User ID"] = "Admin",
+                ["Jet OLEDB:Database Password"] = "123"
+            };
+            oleDbConnection = new OleDbConnection(oleDbCon.ConnectionString);
         }
 
-        public void SqlConnectionStateChanger()
+        public void ConnectionStateChanger(string select)
         {
-            if (sqlConnection.State == ConnectionState.Closed)
-                sqlConnection.Open();
-            else
-                sqlConnection.Close();
+            switch (select)
+            {
+                case "sql":
+                    if (sqlConnection.State == ConnectionState.Closed)
+                        sqlConnection.Open();
+                    else
+                        sqlConnection.Close();
+                    break;
+                case "ole":
+                    if (oleDbConnection.State == ConnectionState.Closed)
+                        oleDbConnection.Open();
+                    else
+                        oleDbConnection.Close();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

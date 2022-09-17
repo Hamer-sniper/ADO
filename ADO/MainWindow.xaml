@@ -21,7 +21,7 @@
         <Label Content="Строка подключения к Access" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Grid.Column="1"/>
         <TextBox x:Name="AccessConnectionStringTextBox" HorizontalAlignment="Center" Margin="0,30,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="300" Grid.Column="1"/>
         <Label Content="Состояние" HorizontalAlignment="Center" Margin="0,120,0,0" VerticalAlignment="Top" Grid.Column="1"/>
-        <TextBox x:Name="AccessConnectionStateTextBox" HorizontalAlignment="Center" Margin="0,150,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="300" Grid.Column="1"/>        
-        <Button x:Name="AccessInfoShowButton" Content="Подключиться к Access" HorizontalAlignment="Center" Margin="0,180,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+        <TextBox x:Name="AccessConnectionStateTextBox" HorizontalAlignment="Center" Margin="0,150,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="300" Grid.Column="1"/>
+        <Button x:Name="AccessInfoShowButton" Content="Открыть соединение с Access" HorizontalAlignment="Center" Margin="0,180,0,0" VerticalAlignment="Top" Grid.Column="1" Click="AccessInfoShowButton_Click"/>
     </Grid>
 </Window>

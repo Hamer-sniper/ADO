@@ -29,22 +29,51 @@ namespace ADO
             InitializeComponent();
 
             SqlConnectionStringTextBox.Text = workWithData.sqlConnection.ConnectionString;
+            AccessConnectionStringTextBox.Text = workWithData.oleDbConnection.ConnectionString;
+
+            SqlConnectionStateTextBox.Text = workWithData.sqlConnection.State.ToString();
+            AccessConnectionStateTextBox.Text = workWithData.oleDbConnection.State.ToString();
 
             workWithData.sqlConnection.StateChange += new StateChangeEventHandler(OnStateChange);
+            workWithData.oleDbConnection.StateChange += new StateChangeEventHandler(OnStateChange);
         }
 
+        #region Методы
+        /// <summary>
+        /// Событие смены статуса подключения
+        /// </summary>
+        /// <param name="sender">Отправитель</param>
+        /// <param name="args">Аргументы события</param>
         public void OnStateChange(object sender, StateChangeEventArgs args)
         {
-            SqlConnectionStateTextBox.Text = args.CurrentState.ToString();
-            if (args.CurrentState == System.Data.ConnectionState.Closed)
-                SqlInfoShowButton.Content = "Открыть соединение с SQL";
-            else
-                SqlInfoShowButton.Content = "Закрыть соединение с SQL";
+            if (sender.ToString() == "Microsoft.Data.SqlClient.SqlConnection")
+            {
+                SqlConnectionStateTextBox.Text = args.CurrentState.ToString();
+                if (args.CurrentState == ConnectionState.Closed)
+                    SqlInfoShowButton.Content = "Открыть соединение с SQL";
+                else
+                    SqlInfoShowButton.Content = "Закрыть соединение с SQL";
+            }
+
+            if (sender.ToString() == "System.Data.OleDb.OleDbConnection")
+            {
+                AccessConnectionStateTextBox.Text = args.CurrentState.ToString();
+                if (args.CurrentState == ConnectionState.Closed)
+                    AccessInfoShowButton.Content = "Открыть соединение с Access";
+                else
+                    AccessInfoShowButton.Content = "Закрыть соединение с Access";
+            }
         }
+        #endregion
 
         private void SqlInfoShowButton_Click(object sender, RoutedEventArgs e)
-        {            
-            workWithData.SqlConnectionStateChanger();
+        {
+            workWithData.ConnectionStateChanger("sql");
+        }
+
+        private void AccessInfoShowButton_Click(object sender, RoutedEventArgs e)
+        {
+            workWithData.ConnectionStateChanger("ole");
         }
     }
 }
