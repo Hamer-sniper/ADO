@@ -75,5 +75,10 @@ namespace ADO
         {
             workWithData.ConnectionStateChanger("ole");
         }
+
+        private void SqlTableShowButton_Click(object sender, RoutedEventArgs e)
+        {
+            new SQL_Window().Show();
+        }
     }
 }
