@@ -39,16 +39,6 @@ namespace ADO
 
             var sql = @"SELECT * FROM SQL_Table";
 
-            /*var sql = @"SELECT 
-Workers.id as 'ID',
-Workers.workerName as 'Имя сотрудника',
-Bosses.workerName  as 'Имя начальника',
-Bosses.departmentName  as 'Имя отдела',
-[Description].[value] as 'Замечание'
-FROM  Workers, Bosses, [Description]
-WHERE Workers.idBoss = Bosses.id and Workers.idDescription = [Description].id
-Order By Workers.Id";*/
-
             da.SelectCommand = new SqlCommand(sql, con);
             da.Fill(dt);
 
@@ -65,10 +55,14 @@ Order By Workers.Id";*/
 
             OleDbConnection oleDbCon = workWithData.oleDbConnection;
 
-            var ole = @"SELECT * FROM Access_Table";
+            var email = row.Row[5].ToString();
+
+            var ole = @"SELECT * FROM Access_Table WHERE Email = @Email";
 
             da.SelectCommand = new OleDbCommand(ole, oleDbCon);
-            
+
+            da.SelectCommand.Parameters.Add("@Email", email);
+
             da.Fill(dt);
 
             gridAllView.DataContext = dt.DefaultView;

@@ -80,5 +80,10 @@ namespace ADO
         {
             new SQL_Window().Show();
         }
+
+        private void AccessTableShowButton_Click(object sender, RoutedEventArgs e)
+        {
+            new Access_Window().Show();
+        }
     }
 }

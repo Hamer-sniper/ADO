@@ -72,8 +72,8 @@ namespace ADO
             sql = @"UPDATE SQL_Table SET 
                            Surname = @Surname,
                            Name = @Name, 
-                           MiddleName = @MiddleName 
-                           Telephone = @Telephone
+                           MiddleName = @MiddleName, 
+                           Telephone = @Telephone,
                            Email = @Email 
                     WHERE Id = @Id";
 
